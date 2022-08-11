@@ -1,10 +1,17 @@
 # Politikch
 
-#solution1 
+<b>Solution1 </b>
+<br/>
+<br/>
 click & run
 
-#solution2
+<br/>
 
+<b>Solution2 </b>
+<br/>
+<br/>
 nvm use 14.14.0
+<br/>
 npm i
+<br/>
 npm start
