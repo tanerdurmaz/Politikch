@@ -3,11 +3,11 @@ import { Councillors } from './Councillors';
 
 function App() {
   return (
-    <div className="App">
-      <div style={{ width: "100%" }}>
-        <Councillors></Councillors>
-      </div>
+
+    <div style={{ width: "100%", height: "100vh" }}>
+      <Councillors></Councillors>
     </div>
+
   );
 }
 
