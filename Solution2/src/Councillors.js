@@ -2,6 +2,7 @@
 
 import MaterialTable from "material-table";
 import React, { useEffect, useState } from "react";
+import { Button } from "@material-ui/core";
 
 /*
     Thanks to material-table filtering and sorting is auto, 
@@ -9,8 +10,11 @@ import React, { useEffect, useState } from "react";
 */
 export const Councillors = () => {
 
-    const [data, setData] = useState([]);
-    const columns = [
+    const [isCouncillors, setIsCouncillors] = useState(true);
+    const [councillors, setCouncillors] = useState([]);
+    const [affairs, setAffairs] = useState([]);
+
+    const councillorsColumns = [
         {
             title: "ID",
             field: "id",
@@ -23,36 +27,44 @@ export const Councillors = () => {
             title: "Last Name",
             field: "lastName",
         },
-        /*
-        {
-            title: "Active",
-            field: "active",
-        },
-        {
-            title: "Official Denomination",
-            field: "officialDenomination",
-        },
-        {
-            title: "Salutation Letter",
-            field: "salutationLetter",
-        },
-        {
-            title: "Salutation Title",
-            field: "salutationTitle",
-        },*/
         {
             title: "Last Modified",
             field: "updated",
         },
     ];
 
+    const affairsColumns = [
+        {
+            title: "ID",
+            field: "id",
+        },
+        {
+            title: "Short Id",
+            field: "shortId",
+        },
+        {
+            title: "Last Modified",
+            field: "updated",
+        },
+    ];
+
+
     useEffect(() => {
+        //since data is small I fetch at the start instead of after button click 
         async function fillTable() {
             fetch(`https://api.allorigins.win/get?url=${encodeURIComponent("http://ws-old.parlament.ch/councillors?format=json")}`)
                 .then((response) => response.json())
                 .then((data) => {
                     console.log(data.contents)
-                    setData(JSON.parse(data.contents));
+                    setCouncillors(JSON.parse(data.contents));
+                })
+                .catch(console.error);
+
+            fetch(`https://api.allorigins.win/get?url=${encodeURIComponent("http://ws-old.parlament.ch/affairs?format=json")}`)
+                .then((response) => response.json())
+                .then((data) => {
+                    console.log(data.contents)
+                    setAffairs(JSON.parse(data.contents));
                 })
                 .catch(console.error);
         }
@@ -62,11 +74,19 @@ export const Councillors = () => {
 
 
     return (
-        <MaterialTable
-            title="Councillors"
-            data={data}
-            columns={columns}
-            options={{ search: true, paging: false, filtering: true, exportButton: true }}
-        />
+        <div>
+            <div style={{ display: "flex", width: "100%", }}>
+                <Button fullWidth style={{ fontSize: "3em" }} onClick={() => { setIsCouncillors(true) }}>Councillors</Button>
+                <Button fullWidth style={{ fontSize: "3em" }} onClick={() => { setIsCouncillors(false) }}>Affairs</Button>
+            </div>
+
+            <MaterialTable
+                title={isCouncillors ? "Councillors" : "Affairs"}
+                data={isCouncillors ? councillors : affairs}
+                columns={isCouncillors ? councillorsColumns : affairsColumns}
+                options={{ search: true, paging: false, filtering: true, exportButton: true }}
+            />
+        </div>
+
     );
 };
