@@ -1,0 +1,24 @@
+<html>
+
+    <head>
+    </head>
+
+    <body>
+        <script type="text/javascript">
+            var lastCheck = 0;
+            document.addEventListener('mousemove', function (event) {
+                //4000 is magical number depending on our preference should modify it 
+                //runs if last event at least 4 seconds ago
+                if (event.timeStamp - lastCheck > 4000) {
+                    lastCheck = event.timeStamp;
+
+                    // simulation of non critical taxing task
+                    for (let i = 0; i < 9999; i++) {
+                        console.log(i);
+                    }
+                }
+            });
+        </script>
+    </body>
+
+</html>

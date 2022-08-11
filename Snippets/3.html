@@ -1,0 +1,31 @@
+<html>
+
+    <head>
+    </head>
+
+    <body>
+        <script type="text/javascript">
+
+            function magnitude(lines) {
+
+                if (!Array.isArray(lines)) {
+                    return -1;
+                }
+
+                if (lines.length === 0) {
+                    return 0;
+                }
+
+                let squareSum = lines.map(el => el * el).reduce((a, b) => a + b)
+                return Math.sqrt(squareSum);
+            }
+
+            console.log(magnitude([3, 4]))
+            console.log(magnitude([0, 0, -10]))
+            console.log(magnitude([]))
+            console.log(magnitude([2, 3, 6, 1, 8]))
+
+        </script>
+    </body>
+
+</html>
